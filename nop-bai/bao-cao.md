@@ -17,7 +17,7 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 | MSSV | 02880 |
 | Lớp / Khóa | K4 |
 | Repo GitHub | https://github.com/sonbui69000-hue/K4-L3-DAY21-CI-CD-for-AI-Systems |
-| Ngày nộp | 2026-10-07 |
+| Ngày nộp | 2026-10-07  |
 
 ---
 
