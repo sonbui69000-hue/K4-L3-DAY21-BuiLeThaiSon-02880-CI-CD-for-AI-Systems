@@ -13,11 +13,11 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 | | |
 |---|---|
-| Họ và tên | ___ |
-| MSSV | ___ |
+| Họ và tên | Bui Le Thai Son |
+| MSSV | 02880 |
 | Lớp / Khóa | K4 |
-| Repo GitHub | https://github.com/___/___ |
-| Ngày nộp | ___ |
+| Repo GitHub | https://github.com/sonbui69000-hue/K4-L3-DAY21-CI-CD-for-AI-Systems |
+| Ngày nộp | 2026-10-07 |
 
 ---
 
@@ -27,13 +27,13 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 | Lần chạy | n_estimators | learning_rate | max_depth | f1_score | accuracy |
 |---|---|---|---|---|---|
-| 1 | ___ | ___ | ___ | ___ | ___ |
-| 2 | ___ | ___ | ___ | ___ | ___ |
-| 3 | ___ | ___ | ___ | ___ | ___ |
+| 1 | 100 | 0.1 | 3 | 0.7109 | 0.878 |
+| 2 | 50 | 0.05 | 2 | 0.6051 | 0.846 |
+| 3 | 200 | 0.1 | 5 | 0.7149 | 0.874 |
 
-**Bộ siêu tham số đã chọn:** `n_estimators=___`, `learning_rate=___`, `max_depth=___`.
+**Bộ siêu tham số đã chọn:** `n_estimators=200`, `learning_rate=0.1`, `max_depth=5`.
 
-**Lý do:** ___
+**Lý do:** Run 3 was selected because it achieved the highest F1 score at 0.7149. Run 1 had the highest accuracy at 0.878, but its F1 score was slightly lower. This shows accuracy alone can hide weaker positive-class performance. Lower learning rates may need more estimators to maintain model strength.
 
 <!--
 Trả lời trong phần Lý do:
