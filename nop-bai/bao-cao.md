@@ -1,15 +1,6 @@
 # Báo Cáo Lab Day 21 - CI/CD cho AI Systems
 
-<!--
-HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau khi điền xong:
 
-  - Giới hạn: KHÔNG QUÁ 1 TRANG A4, tương đương khoảng 450 - 550 từ nội dung.
-  - Chỉ điền vào các chỗ ___ và các ô trong bảng. Không thêm mục mới.
-  - Viết bằng câu hoàn chỉnh, không gạch đầu dòng cụt lủn.
-  - Kiểm tra độ dài sau khi đã xóa hết chú thích:
-        wc -w nop-bai/bao-cao.md
-    và xem trước bản in bằng cách mở file trên GitHub rồi Ctrl+P / Cmd+P.
--->
 
 | | |
 |---|---|
@@ -23,8 +14,6 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 ## 1. Bộ Siêu Tham Số Đã Chọn và Lý Do
 
-<!-- Khoảng 120 - 150 từ. Điền kết quả thật từ MLflow UI ở Bước 1, tối thiểu 3 lần chạy. -->
-
 | Lần chạy | n_estimators | learning_rate | max_depth | f1_score | accuracy |
 |---|---|---|---|---|---|
 | 1 | 100 | 0.1 | 3 | 0.7109 | 0.878 |
@@ -35,66 +24,42 @@ HƯỚNG DẪN - đọc rồi XÓA TOÀN BỘ các khối chú thích này sau k
 
 **Lý do:** Run 3 was selected because it achieved the highest F1 score at 0.7149. Run 1 had the highest accuracy at 0.878, but its F1 score was slightly lower. This shows accuracy alone can hide weaker positive-class performance. Lower learning rates may need more estimators to maintain model strength.
 
-<!--
-Trả lời trong phần Lý do:
-  - Vì sao bộ này tốt hơn các bộ còn lại (dựa trên f1_score, không phải accuracy)?
-  - Lần chạy có accuracy cao nhất có trùng với lần có f1_score cao nhất không?
-    Nếu không, điều đó nói lên điều gì?
-  - Bạn quan sát thấy đánh đổi nào giữa n_estimators và learning_rate?
--->
+
 
 ---
 
 ## 2. Vì Sao Ngưỡng Chất Lượng Đặt Trên F1 Chứ Không Phải Accuracy
 
-<!-- Khoảng 120 - 150 từ. -->
+The dataset is imbalanced, with only 24.8% of samples in the positive class for income above 50K. A model that always predicts low income can reach about 0.752 accuracy because it follows the majority class. This score looks acceptable but it completely misses high-income cases. Positive-class F1 combines precision and recall. It rewards a model that finds high-income cases while limiting incorrect positive predictions. Accuracy does not show this balance. I used `f1_score(y_eval, preds)` without an averaging option because the lab measures performance for target 1 specifically. Weighted F1 would give more influence to the majority class. Macro F1 would average both classes and hide the required positive-class result. The F1 threshold therefore provides a clearer quality gate for this imbalanced classification task.
 
-___
 
-<!--
-Cần nêu được:
-  - Phân bố lớp của tập dữ liệu (tỷ lệ lớp thu nhập > 50K) và hệ quả của nó.
-  - Accuracy của một mô hình luôn trả lời "thu nhập thấp" là bao nhiêu, vì sao con số
-    đó gây hiểu nhầm.
-  - F1 của lớp dương đo điều gì mà accuracy không đo được.
-  - Vì sao KHÔNG dùng average="weighted" hay average="macro" khi gọi f1_score.
--->
 
 ---
 
 ## 3. Khó Khăn Gặp Phải và Cách Giải Quyết
 
-<!-- Nêu 2 - 3 khó khăn thật, mỗi ô một câu ngắn. -->
-
 | Khó khăn | Nguyên nhân | Cách giải quyết |
 |---|---|---|
-| ___ | ___ | ___ |
-| ___ | ___ | ___ |
-| ___ | ___ | ___ |
+| MLflow tests failed in CI | A partial `mlruns` folder lacked metadata | Tests used an isolated temporary MLflow store |
+| EC2 service could not access S3 | The instance had no attached IAM role | An EC2 role with S3 read access was attached |
+| Model loading failed on EC2 | Scikit-learn versions did not match | Scikit-learn 1.4.2 was installed on the VM |
 
 ---
 
 ## 4. So Sánh Bước 2 và Bước 3 (bắt buộc, 2 - 3 câu)
 
-<!-- Lấy số liệu từ bảng ở mục 3.6 của tasks/buoc-3.md. -->
-
 | | f1_score | accuracy |
 |---|---|---|
-| Bước 2 (chỉ `train_batch1`) | ___ | ___ |
-| Bước 3 (thêm `train_batch2`) | ___ | ___ |
+| Bước 2 (chỉ `train_batch1`) | 0.7149 | 0.874 |
+| Bước 3 (thêm `train_batch2`) | 0.7354 | 0.882 |
 
-**Nhận xét:** ___
+**Nhận xét:** Adding `train_batch2` improved F1 by 0.0205 and accuracy by 0.008. The new data improved performance on the same holdout set.
 
-<!--
-Một câu trả lời trung thực kiểu "f1 giảm 0,01 vì dữ liệu mới cùng phân phối, không mang
-thêm thông tin mới" được đánh giá cao hơn kết luận sai rằng thêm dữ liệu luôn tốt hơn.
--->
+
 
 ---
 
 ## 5. Phần Bonus Đã Thực Hiện (nếu có)
-
-<!-- Xóa cả mục 5 nếu không làm bonus. Mỗi bonus tối đa 1 dòng. -->
 
 - [ ] Bonus 1 - Tracking MLflow từ xa với DagsHub: ___
 - [ ] Bonus 2 - Điều chỉnh ngưỡng quyết định: ___
