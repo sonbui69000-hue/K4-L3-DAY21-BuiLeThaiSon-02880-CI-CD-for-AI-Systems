@@ -1,5 +1,6 @@
 import os
 import json
+import mlflow
 import numpy as np
 import pandas as pd
 from src.train import train
@@ -20,6 +21,7 @@ def _make_temp_data(tmp_path):
     """
     rng = np.random.default_rng(0)
     n = 200
+    mlflow.set_tracking_uri(f"file://{tmp_path / 'mlruns'}")
 
     # TODO 1: Tao mang X co kich thuoc (n, len(FEATURE_NAMES)) voi gia tri [0, 1)
     # X = rng.random((n, len(FEATURE_NAMES)))
